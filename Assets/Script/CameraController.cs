@@ -1,19 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraController : MonoBehaviour {
-    public GameObject player;
+    public Transform target;
 
-    private Vector3 offset;
+    public float smoothSpeed = 10f;
+    public Vector3 offset;
 
-	// Use this for initialization
-	void Start () {
-        offset = transform.position - player.transform.position;
-	}
-	
-	// Update is called once per frame
-	void LateUpdate () {
-        transform.position = player.transform.position + offset;
-	}
+    // For debug purpose
+    public float debugTime;
+
+    void FixedUpdate()
+    {
+        MouseScrollZoom();
+
+        Vector3 desiredPosition = target.position + offset;
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
+        transform.position = smoothedPosition;
+        debugTime = Time.deltaTime;
+    }
+
+    // Zoom in or out by scolling the mouse
+    void MouseScrollZoom()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0) { Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize + 1, 1); }
+        if (Input.GetAxis("Mouse ScrollWheel") < 0) { Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize - 1, 1); }
+    }
 }
