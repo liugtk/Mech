@@ -1107,8 +1107,9 @@ MonoBehaviour:
   target: {fileID: 2133527786}
   smoothSpeed: 10
   offset: {x: 0, y: -1, z: -1}
+  boundary: 50
+  speed: 25
   debugTime: 0
-  mouseSensitivity: 1
 --- !u!1 &1491834826
 GameObject:
   m_ObjectHideFlags: 0
